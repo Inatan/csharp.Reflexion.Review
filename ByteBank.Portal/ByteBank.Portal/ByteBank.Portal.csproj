@@ -46,6 +46,7 @@
     <Compile Include="Controller\CambioController.cs" />
     <Compile Include="Controller\ControllerBase.cs" />
     <Compile Include="Infraestrutura\Binding\ActionBinder.cs" />
+    <Compile Include="Infraestrutura\Binding\ActionBindInfo.cs" />
     <Compile Include="Infraestrutura\Binding\ArgumentoNomeValor.cs" />
     <Compile Include="Infraestrutura\ManipuladorRequisicaoController.cs" />
     <Compile Include="Infraestrutura\ManipulaporRequisicaoArquivo.cs" />

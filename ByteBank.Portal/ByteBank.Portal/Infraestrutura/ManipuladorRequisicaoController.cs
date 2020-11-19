@@ -17,8 +17,8 @@ namespace ByteBank.Portal.Infraestrutura
             var controllerWrapper = Activator.CreateInstance("ByteBank.Portal", controllerNomeCompleto, new object[0]);
             var controller = controllerWrapper.Unwrap();
 
-            var methodInfo = _actionBinder.ObterMethodInfo(controller,path);//controller.GetType().GetMethod(actionNome);
-            var resultadoAction = (string)methodInfo.Invoke(controller, new object[0]);
+            var methodInfo = _actionBinder.ObterActionBindInfo(controller,path);//controller.GetType().GetMethod(actionNome);
+            var resultadoAction = (string)methodInfo.Invoke(controller);
 
             var bufferArquivo = Encoding.UTF8.GetBytes(resultadoAction);
             resposta.StatusCode = HttpStatusCode.OK.GetHashCode();
