@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
+
 namespace ByteBank.Portal.Controller
 {
     public abstract class ControllerBase

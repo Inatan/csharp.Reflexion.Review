@@ -1,8 +1,6 @@
-﻿using ByteBank.Portal.Model;
-using ByteBank.Service;
+﻿using ByteBank.Service;
 using ByteBank.Service.Cambio;
-using System.IO;
-using System.Reflection;
+using ByteBank.Portal.Filtros;
 
 namespace ByteBank.Portal.Controller
 {
@@ -11,31 +9,47 @@ namespace ByteBank.Portal.Controller
         private ICambioService _cambioService;
 
         public CambioController()
-        {
+        { 
             _cambioService = new CambioTesteService();
         }
 
+
+        [ApenasHorarioComercial]
         public string MXN()
         {
             var valorFinal = _cambioService.Calcular("MXN", "BRL", 1);
-            var textoPargina = View();
-            var textoResultado = textoPargina.Replace("VALOR_EM_REAIS", valorFinal.ToString());
-            return textoResultado;
+            return View(new
+            {
+                Valor = valorFinal
+            });
         }
 
+        [ApenasHorarioComercial]
         public string USD()
         {
             var valorFinal = _cambioService.Calcular("USD", "BRL", 1);
-            var textoPargina = View();
-            var textoResultado = textoPargina.Replace("VALOR_EM_REAIS", valorFinal.ToString());
-            return textoResultado;
+            return View(new
+                {
+                    Valor = valorFinal
+                });
         }
 
+        [ApenasHorarioComercial]
+        public string Calculo(string moedaDestino) =>
+            Calculo("BRL", moedaDestino, 1);
+
+        [ApenasHorarioComercial]
+        public string Calculo(string moedaDestino, decimal valor) =>
+            Calculo("BRL", moedaDestino, valor);
+
+        [ApenasHorarioComercial]
         public string Calculo(string moedaOrigem, string moedaDestino, decimal valor)
         {
+            
+
             var valorFinal = _cambioService.Calcular(moedaOrigem, moedaDestino, valor);
 
-            var modelo = new CalculoCambioModel
+            var modelo = new
             {
                 MoedaDestino = moedaDestino,
                 MoedaOrigem = moedaOrigem,
@@ -45,11 +59,5 @@ namespace ByteBank.Portal.Controller
 
             return View(modelo);
         }
-
-        public string Calculo(string moedaDestino, decimal valor) =>
-            Calculo("BRL", moedaDestino, valor);
-
-        public string Calculo(string moedaDestino) =>
-            Calculo("BRL", moedaDestino, 1);
     }
 }
