@@ -1,27 +1,38 @@
-﻿using ByteBank.Portal.Controller;
+﻿using ByteBank.Portal.Infraestrutura.IoC;
+using ByteBank.Service;
+using ByteBank.Service.Cambio;
+using ByteBank.Service.Cartao;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net;
-using System.Reflection;
-using System.Text;
 
 namespace ByteBank.Portal.Infraestrutura
 {
+    public class CartaoServiceTesteContainer
+    {
+        public string ObterCartaoDeCreditoDeDestaque() =>
+            "Cartão de Crédito do Teste de Container";
+        public string ObterCartaoDeDebitoDeDestaque() =>
+            "Cartão de Débito do Teste de Container";
+    }
+
     public class WebApplication
     {
-        // http://bytebank.com/ ?
-        // http://localhost:80/ ?
-
-
         private readonly string[] _prefixos;
+        private readonly IContainer _container = new ContainerSimples();
 
         public WebApplication(string[] prefixos)
         {
             if(prefixos == null)
                 throw new ArgumentNullException(nameof(prefixos));
             _prefixos = prefixos;
+
+            Configurar();
+        }
+
+        private void Configurar()
+        {
+            _container.Registrar<ICambioService,CambioTesteService>();
+            _container.Registrar<ICartaoService,CartaoServiceTeste>();
         }
         
         public void Iniciar()
@@ -53,7 +64,7 @@ namespace ByteBank.Portal.Infraestrutura
             }
             else
             {
-                var manipuladorController = new ManipuladorRequisicaoController();
+                var manipuladorController = new ManipuladorRequisicaoController(_container);
                 manipuladorController.Manipular(resposta, path);
             }
 

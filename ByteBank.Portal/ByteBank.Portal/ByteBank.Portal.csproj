@@ -52,8 +52,11 @@
     <Compile Include="Infraestrutura\Binding\ActionBinder.cs" />
     <Compile Include="Infraestrutura\Binding\ActionBindInfo.cs" />
     <Compile Include="Infraestrutura\Binding\ArgumentoNomeValor.cs" />
+    <Compile Include="Infraestrutura\ControllerResolver.cs" />
     <Compile Include="Infraestrutura\Filtros\FilterAttribute.cs" />
     <Compile Include="Infraestrutura\Filtros\FilterResult.cs" />
+    <Compile Include="Infraestrutura\IoC\ContainerSimples.cs" />
+    <Compile Include="Infraestrutura\IoC\IContainer.cs" />
     <Compile Include="Infraestrutura\ManipuladorRequisicaoController.cs" />
     <Compile Include="Infraestrutura\ManipulaporRequisicaoArquivo.cs" />
     <Compile Include="Infraestrutura\Utilidades.cs" />

@@ -6,6 +6,8 @@ namespace ByteBank.Portal.Infraestrutura.IoC
     {
         void Registrar(Type tipoOrigem, Type tipoDestino);
 
+        void Registrar<TOrigem, TDestino>() where TDestino : TOrigem;
+
         object Recuperar(Type tipoOrigem);
     }
 }
