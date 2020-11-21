@@ -24,15 +24,24 @@ namespace ByteBank.Portal.Infraestrutura
 
             var filterResult = _filterResolver.VerificarFiltros(actionBindInfo);
 
-            var resultadoAction = (string)actionBindInfo.Invoke(controller);
+            if (filterResult.PodeContinuar)
+            {
+                var resultadoAction = (string)actionBindInfo.Invoke(controller);
 
-            var bufferArquivo = Encoding.UTF8.GetBytes(resultadoAction);
-            resposta.StatusCode = HttpStatusCode.OK.GetHashCode();
-            resposta.ContentType = "text/html; charset=utf-8";
-            resposta.ContentLength64 = bufferArquivo.Length;
+                var bufferArquivo = Encoding.UTF8.GetBytes(resultadoAction);
+                resposta.StatusCode = HttpStatusCode.OK.GetHashCode();
+                resposta.ContentType = "text/html; charset=utf-8";
+                resposta.ContentLength64 = bufferArquivo.Length;
 
-            resposta.OutputStream.Write(bufferArquivo, 0, bufferArquivo.Length);
+                resposta.OutputStream.Write(bufferArquivo, 0, bufferArquivo.Length);
+            }
+            else
+            {
+                resposta.StatusCode = HttpStatusCode.TemporaryRedirect.GetHashCode();
+                resposta.RedirectLocation = "/Erro/Inesperado";
+            }
             resposta.OutputStream.Close();
+
         }
     }
 }
